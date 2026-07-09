@@ -6,7 +6,7 @@ from app.api.websocket import router as webdsocket_router
 def main():
 
     # connect to your websockets
-    # TODO: may need to start this
+    # TODO: may need to start this with uvicorn
     app = FastAPI()
     # adds the routes registered for this router to your fast api app 
     app.include_router(websocket_router)
@@ -18,9 +18,6 @@ def main():
     # calculate force vector
 
     # send to unreal
-
-
-
 
 
     print("Hello from backend!")

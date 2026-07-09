@@ -3,6 +3,9 @@
 
 from fastapi import APIRouter, WebSocket
 from app.utils.image import bytes_to_image
+from app.unreal.unreal_client import UnrealClient
+from app.model.hand_tracker import HandTracker
+from app.data_classes.force_vector import ForceVector
 
 # TODO: import predictor
 
@@ -15,8 +18,10 @@ router = APIRouter()
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
 
-    # TODO: load yolo model here
-    # TODO: load unreal connection to send vector to
+    # TODO: load hand tracker model here
+    hand_tracker = HandTracker()
+    # TODO: check if you want to pass your unreal ip into the constructor or get it within the constructor
+    unreal_client = UnrealClient()
 
     while True:
         image_bytes = await websocket.receive_bytes()
@@ -24,11 +29,12 @@ async def websocket_endpoint(websocket: WebSocket):
 
         # TODO: implement transform image bytes into an image (utils/image_processor)
         image = bytes_to_image(image_bytes)
-        # TODO: send image to predictor
-        
-        # TODO: get vector back (custom class resembling a json probably)
-
-        # TODO: send this image to your yolo server
+        # TODO: implement send image to predictor
+        hand_prediction = hand_tracker.predict(image)
+        # TODO: implement get vector back (custom class resembling a json probably)
+        force_vec = ForceVector(hand_prediction)
+        # TODO: implement sending image to yolo server
+        unreal_client.send_vector(force_vec.json_output)
 
 
 

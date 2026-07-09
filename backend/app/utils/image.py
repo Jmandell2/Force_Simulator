@@ -7,4 +7,4 @@
 def bytes_to_image(bytes):
     pass
 
-    # TODO: find out what type of image yolo model requires
+    # TODO: find out what type of image hand model requires

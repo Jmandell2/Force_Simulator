@@ -1,13 +1,18 @@
 
+from app.config import settings
+import websockets
+import json
 
 class UnrealClient:
 
     def __init__(self):
-        # TODO: create your connection to unreal
-        # TODO: get unreal ip address
-        # TODO: connect
-        pass
+        self.socket_connection = await websockets.connect(f"ws://{settings.unreal_host}:{settings.unreal_port}")
+        # TODO: get actual unreal ip address
 
     def send_vector(vec):
-        # TODO: where you actually send your vector over
-        pass
+        '''
+            where you actually send your json over to unreal
+        '''
+        await self.websocket.send(
+            json.dumps(vec)
+        )

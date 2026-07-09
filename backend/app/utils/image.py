@@ -1,10 +1,14 @@
 
-
+import numpy as np
 
 
 # TODO: create bytes - image converter
 # TODO: create test 
 def bytes_to_image(bytes):
-    pass
+    '''
+        mp model expects a numpy array
+    '''
+    
 
-    # TODO: find out what type of image hand model requires
+
+

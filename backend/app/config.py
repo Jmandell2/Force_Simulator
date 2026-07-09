@@ -1,5 +1,14 @@
 # Get your env variables here
 
+from pydantic_settings import BaseSettings
 
 
-# TODO: set up your ip addresses and get from env file
+class Settings(BaseSettings):
+    unreal_host: str
+    unreal_port: int
+
+    class Config:
+        env_file = ".env"
+
+
+settings = Settings()

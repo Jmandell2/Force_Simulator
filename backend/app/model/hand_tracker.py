@@ -2,6 +2,33 @@ import mediapipe as np
 import numpy as np
 import cv2
 
+'''
+
+Return value of a prediction:
+
+
+Object containing:
+    - multi_hand_landmarks
+        - list of hands, with each hand containing 21 landmarks in an array
+        - hand = result.multi_hand_landmarks[0]
+        - each landmark has an x, y, and z coordinate (landmark.x, landmark.y, landmark.z)
+        - x, y normalized horizontal and vertical (0-1)
+        - z is a depth value
+        - landmark indices
+            - 0 wrist
+            - 1-4 thumb
+            - 5-8 index finger
+            - etc. see hand_landmarks.png
+    - multi_handedness
+        - tells you whether it's a left or right hand
+    - multi_hand_world_landmarks
+        - same landmarks but in 3d world space not normalized screen space
+
+
+'''
+
+
+
 class HandTracker:
 
     """
@@ -36,11 +63,8 @@ class HandTracker:
  
         result = self.hands.process(rgb)
 
-        # TODO: look into what is actually a part of the hand track prediction
 
         if result.multi_hand_landmarks:
             return result.multi_hand_landmarks[0]
-
-
 
         return None

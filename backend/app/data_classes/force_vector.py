@@ -11,10 +11,21 @@ class ForceVector:
 
     def __init__(self, hand_track):
         self.hand_track = hand_track
-        pass
-    # TODO: with individual fingers and other tracking info now you're probably gonna have to include rotation
-    # and other per finger data
+        # hand_track is your indices 0-21, with each containing an x, y, z
+
+
+    # TODO: Implement with more sophisticated output than just sending over the x, y, z but for now fine
 
     def json_output():
-        # TODO: implement outputting a json
-        pass
+        return {
+            "landmarks" : 
+            [
+                {
+                    'x' : lm.x,
+                    'y' : lm.y,
+                    'z' : lm.z
+                }
+                for lm in self.hand_track.landmark
+            ]
+             
+        }

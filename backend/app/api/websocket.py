@@ -20,7 +20,6 @@ router = APIRouter()
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
 
-    # TODO: implement hand tracker model
     hand_tracker = HandTracker()
     # socket connection to send json over to unreal
     unreal_client = UnrealClient()
@@ -31,7 +30,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
         # TODO: implement transform image bytes into an image (utils/image_processor)
         image = bytes_to_image(image_bytes)
-        # TODO: implement send image to predictor
+
         hand_prediction = hand_tracker.predict(image)
         # TODO: implement get vector back (custom class resembling a json probably)
         force_vec = ForceVector(hand_prediction)

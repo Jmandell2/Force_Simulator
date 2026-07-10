@@ -33,7 +33,7 @@ class HandTracker:
             image,
             cv2.COLOR_BGR2RGB
         )
-
+ 
         result = self.hands.process(rgb)
 
         # TODO: look into what is actually a part of the hand track prediction

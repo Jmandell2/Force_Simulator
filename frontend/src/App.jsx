@@ -5,6 +5,8 @@ import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
+
+  // state variables
   const [count, setCount] = useState(0)
 
   return (

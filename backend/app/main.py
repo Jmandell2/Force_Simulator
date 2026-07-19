@@ -4,6 +4,12 @@ from app.api.websocket import router as webdsocket_router
 
 
 def main():
+    # TODO: annotate all your functions
+    # TODO: private/public/protected all your functions (check python default)
+    # TODO: implement scripting to run backend automatically
+    # TODO: update your ip addresses with their actual values
+    # TODO: implement/run tests
+    # TODO: update readme/documentation
 
     # connect to your websockets
     # TODO: may need to start this with uvicorn

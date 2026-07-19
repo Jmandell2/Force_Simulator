@@ -28,7 +28,6 @@ Object containing:
 '''
 
 
-
 class HandTracker:
 
     """

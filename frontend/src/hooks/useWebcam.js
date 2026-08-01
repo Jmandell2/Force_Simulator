@@ -12,6 +12,7 @@ export function useWebcam(){
 
 
     useEffect(() => {
+        console.log("about to start camera use webcam");
 
         async function startCamera(){
 
@@ -28,6 +29,8 @@ export function useWebcam(){
         }
 
         startCamera();
+
+        console.log("started camera");
 
         return ()=>{
 

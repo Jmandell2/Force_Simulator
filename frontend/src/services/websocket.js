@@ -13,9 +13,24 @@ const WS_IP = "127.0.0.8";
 
 export function createSocket(){
     
+    console.log(" 1.) websocket launching");
 
     // TODO: catch connection failure errors 
     const socket = new WebSocket(WS_IP);
+
+    socket.onerror = (error) => {
+        console.log("WebSocket error:", error);
+    };
+
+
+    socket.onopen = () => {
+        console.log("WebSocket connected");
+    };
+
+
+    socket.onclose = () => {
+        console.log("WebSocket closed");
+    };
 
     return socket;
 }

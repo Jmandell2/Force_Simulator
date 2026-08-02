@@ -7,6 +7,14 @@ import NavBar from './components/NavBar'
 
 import './App.css'
 
+
+// TODO; fix background so it's not white when you scroll down
+// TODO: scale site so it fits whatever your browser size is
+// TODO: fix weird white stripes
+// TODO: fix alignment for other componenets
+// TODO: get fade on frames set up
+// TODO; make frame component resizable
+
 function App() {
 
   // state variables
@@ -15,12 +23,9 @@ function App() {
   console.log("in app");
 
   return (
-    <div>
-            <h1>Force Simulator</h1>
-            <NavBar/>
-            <Dashboard/>
-
-    </div>
+      <div style={{position: 'fixed'}}>
+          <Dashboard/>
+      </div>
   )
 }
 

@@ -2,6 +2,14 @@
 import Triangle from './Triangle'
 import Frame from './Frame'
 import WebcamPanel from './WebcamPanel'
+import UnrealPanel from './UnrealPanel'
+import playIcon from "../assets/play.png";
+import circle from "../assets/circle.png";
+import triangle from "../assets/triangle.png";
+
+
+
+
 
 export default function Dashboard(){
 
@@ -20,6 +28,17 @@ export default function Dashboard(){
             */}
 
             <WebcamPanel/>
+            <UnrealPanel />
+
+            <div className="leftBar" style={{position:'absolute', bottom: '-14%',left: '-35%', display: 'flex', flexDirection: 'column', backgroundColor: 'white'}}>
+                
+                <div className="min-w-screen min-h-screen absolute left-6 top-[34px]"></div>
+                <img src={triangle} alt="Play"/>
+                <p style={{marginLeft:'-10px', marginBottom: '440px'}}>Force Simulator</p>
+                <img src={circle} alt="circle"/>
+                <p style={{marginLeft:'-10px', marginBottom: '20px'}}>GitHub</p>
+                <p style={{marginLeft:'-10px'}}>Website</p>
+            </div>
 
             {/* 
            

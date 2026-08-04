@@ -1,10 +1,10 @@
 
-
+import usePixelStream from '../hooks/usePixelStream'
 
 
 export default function PixelStream(){
 
-    const { videoRef } = usePixelStreaming();
+    const { videoRef } = usePixelStream();
 
     return(
         <video

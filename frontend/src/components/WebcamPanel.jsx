@@ -4,6 +4,7 @@ import Webcam from './Webcam'
 import Frame from './Frame'
 
 // TODO: Standardize css passing methodology
+// TODO: scale down webcam
 
 export default function WebcamPanel(){
     const frameStyle = {

@@ -109,7 +109,7 @@ function Webcam(){
 
 
     return (
-        <div style={{position: 'absolute', right: '10%'}}>            
+        <div style={{position: 'absolute', right: '6.8%'}}>            
             <p>
                 WebSocket:
                 {connected ? "Connected" : "Disconnected"}
@@ -120,8 +120,8 @@ function Webcam(){
                 ref={videoRef}
                 autoPlay
                 style={{
-                width: "300px",
-                height: "300px",
+                width: "200px",
+                height: "200px",
                 objectFit: "cover"
             }}
             />

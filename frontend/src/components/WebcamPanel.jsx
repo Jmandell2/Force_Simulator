@@ -4,7 +4,6 @@ import Webcam from './Webcam'
 import Frame from './Frame'
 
 // TODO: Standardize css passing methodology
-// TODO: scale down webcam
 
 export default function WebcamPanel(){
     const frameStyle = {
@@ -16,13 +15,13 @@ export default function WebcamPanel(){
     const webcamStyle = {}
     const textStyle = {
         position: 'absolute',
-        bottom: '15px',
+        bottom: '115px',
         fontSize: 15,
-        left: '150px',
+        left: '210px',
     }
 
     return(
-        <div style={{position: 'relative', height: '400px', width: '400px', margin: '10% 190%'}}>
+        <div style={{position: 'relative', height: '400px', width: '400px', marginTop: '20px', left: '222%'}}>
             <Frame style={frameStyle}/>
              <Webcam />
              <p className="text-[#FFF] font-judson text-2xl w-[100px] h-5" style={textStyle}>

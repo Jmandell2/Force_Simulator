@@ -5,6 +5,7 @@ from app.utils.image import bytes_to_image
 from app.unreal.unreal_client import UnrealClient
 from app.model.hand_tracker import HandTracker
 from app.data_classes.force_vector import ForceVector
+import asyncio
 
 
 '''
@@ -22,7 +23,11 @@ async def websocket_endpoint(websocket: WebSocket):
 
     hand_tracker = HandTracker()
     # socket connection to send json over to unreal
-    unreal_client = UnrealClient()
+    unreal_server = UnrealClient()
+    # starts in different background task, so it doesn't wait eternally for someone to close it
+    asyncio.create_task(
+        unreal_server.start()
+    )
 
     while True:
         image_bytes = await websocket.receive_bytes()
@@ -32,7 +37,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
         hand_prediction = hand_tracker.predict(image)
         force_vec = ForceVector(hand_prediction)
-        unreal_client.send_vector(force_vec.json_output())
+        await unreal_server.send_vector(force_vec.json_output())
 
 
 

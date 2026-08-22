@@ -1,6 +1,6 @@
-from fastapi import fastAPI
-from app.api.websocket import router as webdsocket_router
-
+from fastapi import FastAPI
+from app.api.websocket import router as websocket_router
+from unreal.unreal_client import UnrealClient
 
 
 def main():
@@ -11,6 +11,7 @@ def main():
     # TODO: implement/run tests
     # TODO: update readme/documentation
 
+    # testing out unreal client
     # connect to your websockets
     # TODO: may need to start this with uvicorn
     app = FastAPI()

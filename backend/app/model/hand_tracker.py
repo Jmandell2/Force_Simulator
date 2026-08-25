@@ -1,4 +1,4 @@
-import mediapipe as np
+import mediapipe as mp
 import numpy as np
 import cv2
 
@@ -34,11 +34,15 @@ class HandTracker:
     Detects hand landmarks from images.
     """
 
-    def __init__(self):
+    def __init__(self, 
+                 max_num_hands = 1, 
+                 min_detection_confidence = .7, 
+                 min_tracking_confidence = .7
+                 ):
         self.hands = mp.solutions.hands.Hands(
-            max_num_hands=1,
-            min_detection_confidence=0.7,
-            min_tracking_confidence=0.7,
+            max_num_hands=max_num_hands,
+            min_detection_confidence=min_detection_confidence,
+            min_tracking_confidence=min_tracking_confidence,
         )
 
 

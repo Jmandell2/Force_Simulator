@@ -2,10 +2,19 @@ import pytest
 import asyncio
 import websockets
 import json
+import cv2
+from pathlib import Path
 from app.unreal.unreal_client import UnrealClient
+from app.model.hand_tracker import HandTracker
+
 
 
 # TODO: implement testing
+
+
+# -------------------------
+# Unreal Client tests
+# -------------------------
 
 UNREAL_CLIENT = UnrealClient()
 
@@ -47,6 +56,48 @@ async def test_handle_client():
         assert UNREAL_CLIENT.data['y'] == 20
     server.close()
     await server.wait_closed()
+
+# -------------------------
+# Hand Tracker tests
+# -------------------------
+
+HAND_TRACKER = HandTracker()
+
+TEST_IMAGES = Path(__file__).parent / "test_images"
+
+HAND1_PATH = TEST_IMAGES / "hand_test.jpeg"
+HAND2_PATH = TEST_IMAGES / "hand_test2.jpeg"
+
+image1 = cv2.imread(HAND1_PATH)
+image2 = cv2.imread(HAND2_PATH)
+
+def test_hands_init():
+    assert HAND_TRACKER.hands != None
+
+def test_hands_tracking1():
+    assert image1.any() == True
+
+def test_hands_tracking2():
+    assert image2.any() == True
+
+def test_hands_prediction1():
+    prediction = HAND_TRACKER.predict(image1)
+    assert prediction != None
+
+def test_hands_prediction2():
+    prediction = HAND_TRACKER.predict(image2)
+    wrist = prediction.landmark[0]
+    assert prediction != None
+    print(wrist.x, ' prediction wrist x')
+    print(wrist.y, ' prediction wrist y')
+    print(wrist.z, ' prediction wrist z')
+
+
+
+
+
+
+
 
 
     

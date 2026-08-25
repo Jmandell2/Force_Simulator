@@ -8,23 +8,33 @@ Purpose: create a json style vector to send to unreal engine telling
 
 class ForceVector:
 
-    def __init__(self, hand_track):
-        self.hand_track = hand_track
-        # hand_track is your indices 0-21, with each containing an x, y, z
+    def __init__(self, hand):
+        self.direction = hand[1]
+        self.hands = hand[0]
+    # hand_track is your indices 0-21, with each containing an x, y, z
 
 
-    # TODO: Implement with more sophisticated output than just sending over the x, y, z but for now fine
+    # state: no hand -> hand
 
-    def json_output():
-        return {
-            "landmarks" : 
-            [
-                {
-                    'x' : lm.x,
-                    'y' : lm.y,
-                    'z' : lm.z
-                }
-                for lm in self.hand_track.landmark
-            ]
-             
+    # output:
+    # hands: true/false
+    # directionX [x, y, z] (-1 left, 1 right, 0 none)
+    # velocity (might not need)
+
+    def json_output(self):
+
+        # is not wasHand, then set direction = 0
+        # if direction isn't different enough from last time (need to find a threshold) then 0
+
+        # if wasHand, you can calculate difference and direction
+        # if direction is beyond a certain x,y then do no hand and drop
+
+        # hand is always true, because you would return by now if there was no hands prediction
+        pack = {
+                'hands' : str({self.hands}),
+                'direction': str({self.direction}),
+                'velocity': '0',
         }
+       
+
+        return pack

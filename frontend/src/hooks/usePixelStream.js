@@ -3,30 +3,26 @@
 // TODO: wtf is pixel stream? 
 
 import { useRef, useEffect } from 'react';
-
-
 import {connectUnreal} from '../services/unreal'
 
 
 export default function UsePixelStream(){
 
-    const videoRef = useRef(null);
+    const containerRef = useRef(null);
 
-    useEffect(() => {
+    useEffect(
+        () => {
+            if(!containerRef.current) return;
 
-        if (!videoRef.current)
-            return;
+            const connection = connectUnreal(containerRef.current);
 
-        const connection = connectUnreal(videoRef.current);
+            return () => {
+                connection.close?.();
+            };
 
-        return () => {
-            connection.close?.();
-        };
+        }, []
+    );
 
-    }, []);
-
-    return {
-        videoRef
-    };
+    return {containerRef};
 
 }

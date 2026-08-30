@@ -1,33 +1,44 @@
 // connects with your unreal server
 // receives an image from unreal server
 
+import {PixelStreaming} from '@epicgames-ps/lib-pixelstreamingfrontend-ue5.8';
+
 // TODO: switch to actual ue ip from an env file
-const UE_IP = "123.4.3.2";
+const UE_IP = import.meta.env.VITE_UE_IP;
+const UE_PORT = import.meta.env.VITE_UE_PORT|| "80";
 
 
-export function connectUnreal(videoElement){
+export function connectUnreal(videoContainer){
 
-    const socket = new WebSocket(UE_IP);
-    // creates peer connection
-    const peer = new RTCPeerConnection();
-
-    // sets the callback
-    peer.ontrack = (event) => {
-        // sets your video element to the first stream you gete
-        videoElement.srcObject = event.streams[0];
-
+    const config = {
+        AutoConnect: true,
+        ss: 'ws://${UE_IP}:${UE_PORT}',
     };
 
-    // 4. Exchange signaling messages over the websocket
-    socket.onmessage = async (message) => {
-        console.log(message, " message received via websocket");
-        // Handle SDP offers
-        // Handle ICE candidates
-    };
+    const streaming = new PixelStreaming(config);
+
+    // library creates its own <video> element internally
+    videoContainer.appendChild(streaming.videoElementParent);
+
+    streaming.addEventListener('playStreamRejected', (e) => {
+        console.error('stream rejected', e);
+    }
+    );
+
+    streaming.addEventListener('webRtcConnected', (e) => {
+        console.log('Web rtc connected');
+    }
+    );
+
+    streaming.addEventListener('webRtcDisconnected', (e) => {
+        console.log('Web rtc disconnected');
+    }
+
+    );
+
 
     return {
-        socket,
-        peer
+        streaming, close: () => streaming.disconnect();
     };
 }
 

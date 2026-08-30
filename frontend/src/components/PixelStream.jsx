@@ -2,15 +2,14 @@
 import usePixelStream from '../hooks/usePixelStream'
 
 
+
 export default function PixelStream(){
 
-    const { videoRef } = usePixelStream();
+    const { containerRef } = usePixelStream();
 
     return(
-        <video
-            ref={videoRef}
-            autoPlay
-            playsInline
+        <div
+            ref={containerRef}
             style={{
                 width: "100%",
                 height: "100%"

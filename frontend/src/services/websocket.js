@@ -8,15 +8,22 @@
 
 
 // TODO: get the url from your env folder
-const WS_IP = "127.0.0.8";
+const WS_IP = import.meta.env.VITE_BACKEND_HOST;
+const WS_PORT = import.meta.env.VITE_BACKEND_PORT;
 
 
 export function createSocket(){
     
     console.log(" 1.) websocket launching");
 
+    console.log("attempting to connect to:", `ws://${WS_IP}:${WS_PORT}/ws`);
+
+
     // TODO: catch connection failure errors 
-    const socket = new WebSocket(WS_IP);
+    const socket = new WebSocket(
+        `ws://${WS_IP}:${WS_PORT}/ws`
+    );    
+
 
     socket.onerror = (error) => {
         console.log("WebSocket error:", error);

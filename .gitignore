@@ -26,6 +26,8 @@ frontend/*.sln
 frontend/*.sw?
 
 
+frontend/.env
+
 
 
 
@@ -35,7 +37,7 @@ frontend/*.sw?
 
 #backend
 backend/.venv/
-
+backend/.env
 
 
 

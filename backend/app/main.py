@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from app.api.websocket import router as websocket_router
-from unreal.unreal_client import UnrealClient
 
 
-def main():
+# TODO: may need to start this with uvicorn
+app = FastAPI()
+    # adds the routes registered for this router to your fast api app 
+app.include_router(websocket_router)
+
     # TODO: annotate all your functions
     # TODO: private/public/protected all your functions (check python default)
     # TODO: implement scripting to run backend automatically
@@ -13,10 +16,7 @@ def main():
 
     # testing out unreal client
     # connect to your websockets
-    # TODO: may need to start this with uvicorn
-    app = FastAPI()
-    # adds the routes registered for this router to your fast api app 
-    app.include_router(websocket_router)
+    
 
     # wait to receive image from your frontend
 
@@ -26,9 +26,3 @@ def main():
 
     # send to unreal
 
-
-    print("Hello from backend!")
-
-
-if __name__ == "__main__":
-    main()

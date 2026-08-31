@@ -72,6 +72,7 @@ router = APIRouter()
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
 
+    # TODO: add in websocket connection error handling
     hand_tracker = HandTracker()
     # socket connection to send json over to unreal
     unreal_server = UnrealClient()

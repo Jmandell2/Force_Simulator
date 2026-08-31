@@ -1,9 +1,27 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from app.api.websocket import router as websocket_router
+from app.unreal.unreal_server import UnrealServer
+import asyncio
 
 
-# TODO: may need to start this with uvicorn
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    app.state.unreal_server = UnrealServer()
+
+    unreal_task = asyncio.create_task(
+        app.state.unreal_server.start()
+    )
+    yield
+
+    app.state.unreal_server.server.close()
+    unreal_task.cancel()
+
+
+
+
+app = FastAPI(lifespan=lifespan)
+
     # adds the routes registered for this router to your fast api app 
 app.include_router(websocket_router)
 

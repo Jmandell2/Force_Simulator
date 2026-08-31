@@ -1,63 +1,64 @@
-
 import { useState, useEffect, useRef } from "react";
 import { createSocket } from "../services/websocket";
 
+export function useSimulationSocket() {
 
-export function useSimulationSocket(){
-    
-    // reference to your socket
     const socketRef = useRef(null);
-
     const [connected, setConnected] = useState(false);
 
-    // what loads initially for the component
-    useEffect(() =>{
+    useEffect(() => {
 
-        console.log("in use simulation socket, about to create socket");
+        console.log("Creating backend WebSocket");
 
         const socket = createSocket();
+
         socketRef.current = socket;
 
-
         socket.onopen = () => {
-            console.log("Connected to backend websocket");
+            console.log("CONNECTED TO BACKEND");
             setConnected(true);
         };
 
-
-        socket.onclose = () => {
-            console.log("Disconnected");
+        socket.onclose = (event) => {
+            console.log("BACKEND SOCKET CLOSED", event.code);
             setConnected(false);
         };
 
-
         socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
+            console.error("BACKEND SOCKET ERROR", error);
         };
 
         return () => {
+            console.log("Cleaning up backend WebSocket");
+
             socket.close();
+            socketRef.current = null;
         };
 
     }, []);
 
+    function sendFrame(blob) {
 
-    function sendFrame(blob){
-
-        console.log("about to send frame");
-            if(
-                socketRef.current &&
-                socketRef.current.readyState === WebSocket.OPEN
-            ){
-                socketRef.current.send(blob);
-            }
-            console.log("frame sent");
+        if (!socketRef.current) {
+            console.log("No socket exists");
+            return;
         }
 
-        return {
-            connected,
-            sendFrame
-        };
+        if (socketRef.current.readyState !== WebSocket.OPEN) {
+            console.log(
+                "Socket exists but isn't open. State:",
+                socketRef.current.readyState
+            );
+            return;
+        }
 
+        console.log("SENDING FRAME TO BACKEND");
+
+        socketRef.current.send(blob);
+    }
+
+    return {
+        connected,
+        sendFrame
+    };
 }
-

@@ -2,10 +2,8 @@
 
 from fastapi import APIRouter, WebSocket
 from app.utils.image import bytes_to_image
-from app.unreal.unreal_client import UnrealClient
 from app.model.hand_tracker import HandTracker
 from app.data_classes.force_vector import ForceVector
-import asyncio
 
 
 def calculate_difference(current, previous):
@@ -75,11 +73,8 @@ async def websocket_endpoint(websocket: WebSocket):
     # TODO: add in websocket connection error handling
     hand_tracker = HandTracker()
     # socket connection to send json over to unreal
-    unreal_server = UnrealClient()
+    unreal_server = websocket.app.state.unreal_server
     # starts in different background task, so it doesn't wait eternally for someone to close it
-    asyncio.create_task(
-        unreal_server.start()
-    )
 
 
     # save previous prediction
@@ -88,8 +83,9 @@ async def websocket_endpoint(websocket: WebSocket):
     wasHand = False
 
     while True:
+        print('backend awaiting image from frontend')
         image_bytes = await websocket.receive_bytes()
-        print("got image")
+        print("got image from frontend")
 
         image = bytes_to_image(image_bytes)
 
@@ -98,7 +94,7 @@ async def websocket_endpoint(websocket: WebSocket):
             await unreal_server.send_vector({'hands': 'none', 'velocity': '0', 'direction': '0'})
             wasHand = False
             previous_prediction = None
-            return
+            continue
 
         # calculate direction here and pass in
         hand = calculate_direction(hand_prediction, previous_prediction, wasHand)

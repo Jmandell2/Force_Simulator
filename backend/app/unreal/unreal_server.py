@@ -6,7 +6,7 @@ import json
 # TODO: adjust so you're checking your client for a token verifying that it's from unreal
 # TODO: adjust so that each client gets its own port
 
-class UnrealClient:
+class UnrealServer:
 
     NETWORK_INTERFACES = '0.0.0.0'
     PORT = 8080

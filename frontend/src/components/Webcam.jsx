@@ -25,7 +25,6 @@ function Webcam(){
     // you need to store it rather than just importing and calling it because
     // it stores a socket reference in it, so you need to initialize it and then call
     const {
-        connected, 
         sendFrame
     } = useSimulationSocket();
 
@@ -43,24 +42,14 @@ function Webcam(){
         const interval = setInterval(()=>{
 
             console.log("in interval (webcam)");
-
-
-
             if(!videoRef.current || !canvasRef.current){
                 console.log("VIdeo ref not current or canvas ref not current [WEBCAM}")
                 return;
             }
-
-
             const video = videoRef.current;
-
-
             const canvas = canvasRef.current;
-
-
             const context =
                 canvas.getContext("2d");
-
 
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -79,22 +68,15 @@ function Webcam(){
 
             console.log("about to send  blob (webcam)");
 
-            if(connected){
-                canvas.toBlob(
-                (blob)=>{
-
-                    if(blob){
+            canvas.toBlob(
+                (blob) => {
+                    if (blob) {
                         sendFrame(blob);
                     }
-
                 },
                 "image/jpeg",
                 0.8
-                );
-
-            } else {
-                console.log("not connected, not sending blob");
-            }
+            );
             
 
 
@@ -110,10 +92,6 @@ function Webcam(){
 
     return (
         <div style={{position: 'absolute', right: '6.8%'}}>            
-            <p>
-                WebSocket:
-                {connected ? "Connected" : "Disconnected"}
-            </p>
             
             {/* video is whats actually being shown on screen */}
             <video

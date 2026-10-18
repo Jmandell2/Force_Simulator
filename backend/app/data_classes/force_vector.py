@@ -11,6 +11,9 @@ class ForceVector:
     def __init__(self, hand):
         self.direction = hand[1]
         self.hands = hand[0]
+        self.moveUp = hand[2]
+        print('hand direction: ', self.direction)
+        print('hands: ', self.hands)
     # hand_track is your indices 0-21, with each containing an x, y, z
 
 
@@ -31,9 +34,10 @@ class ForceVector:
 
         # hand is always true, because you would return by now if there was no hands prediction
         pack = {
-                'hands' : str({self.hands}),
-                'direction': str({self.direction}),
+                'hands' : str(self.hands),
+                'direction': self.direction,
                 'velocity': '0',
+                'moveUp': self.moveUp,
         }
        
 

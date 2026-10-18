@@ -9,24 +9,12 @@ import triangle from "../assets/triangle.png";
 import SidePanel from './SidePanel'
 
 
-
-
-
-
-
-export default function Dashboard(){
-
-    return(
-        <div>
-            <WebcamPanel/>
+export default function Dashboard() {
+    return (
+        <main className="dashboard">
+            <SidePanel />
             <UnrealPanel />
-            <SidePanel/>
-      </div>
-
-
-
-
+            <WebcamPanel />
+        </main>
     );
 }
-
-

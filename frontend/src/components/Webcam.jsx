@@ -91,29 +91,21 @@ function Webcam(){
 
 
     return (
-        <div style={{position: 'absolute', right: '6.8%'}}>            
-            
-            {/* video is whats actually being shown on screen */}
-            <video
-                ref={videoRef}
-                autoPlay
-                style={{
-                width: "200px",
-                height: "200px",
-                objectFit: "cover"
-            }}
-            />
-    
-           
-            <canvas
-                ref={canvasRef}
-                style={{
-                    display:"none"
-                }}
-            />
-    
-        </div>
-    );
+    <div className="webcam-content">
+        <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className="webcam-video"
+        />
+
+        <canvas
+            ref={canvasRef}
+            style={{ display: "none" }}
+        />
+    </div>
+);
 
 }
 

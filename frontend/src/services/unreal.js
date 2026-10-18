@@ -17,6 +17,8 @@ export function connectUnreal(videoContainer){
     const config = new Config({
     initialSettings: {
         [Flags.AutoConnect]: true,
+        [Flags.AutoPlayVideo]: true,
+        [Flags.StartVideoMuted]: true,
         [TextParameters.SignallingServerUrl]: `ws://${UE_IP}:${UE_PORT}`
     }
 });
@@ -45,8 +47,14 @@ export function connectUnreal(videoContainer){
     );
 
 
+
     return {
-        streaming, close: () => streaming.disconnect()
+        streaming, 
+        close: () => {
+            streaming.disconnect();
+            streaming.videoElementParent?.remove();
+
+        }
     };
 }
 

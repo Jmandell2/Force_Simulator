@@ -12,12 +12,14 @@ export default function UsePixelStream(){
 
     useEffect(
         () => {
-            if(!containerRef.current) return;
+            const container = containerRef.current;
+            if(!container) return;
 
-            const connection = connectUnreal(containerRef.current);
+            const connection = connectUnreal(container);
 
             return () => {
                 connection.close?.();
+                container.innerHTML = '';
             };
 
         }, []

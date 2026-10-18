@@ -18,8 +18,6 @@ async def lifespan(app:FastAPI):
     unreal_task.cancel()
 
 
-
-
 app = FastAPI(lifespan=lifespan)
 
     # adds the routes registered for this router to your fast api app 

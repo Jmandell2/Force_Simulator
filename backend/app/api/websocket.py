@@ -7,23 +7,35 @@ from app.data_classes.force_vector import ForceVector
 
 
 def calculate_difference(current, previous):
-    difference_threshold = .1
+    difference_threshold = .002
     x_dif = current.x - previous.x
-    if abs(x_dif) <= .1:
+    if abs(x_dif) < difference_threshold:
         return 0
     if x_dif > 0:
         return 1
     return 2
 
+def calculate_height(current, previous):
+    difference_threshold = .001
+    min_height = .01
+    y_dif = current.y - previous.y
+    if y_dif >= 0:
+        print('move up = false')
+        return 'false'
+    else:
+    # if y_dif > 0 and y_dif > difference_threshold and current.y > min_height:
+        print('move up = true')
+        return 'true'
+    print('move up = false')
+    return 'false'
+
 
 
 def past_threshold(coordinates):
-    left_threshold = .2 # range 0,1 left - right
-    right_threshold = .8
-    up_threshold = .2 # range 0, 1 top - bottom
-    down_threshold = .8
+    left_threshold = .02 # range 0,1 left - right
+    right_threshold = .85
 
-    return coordinates.x >= left_threshold and coordinates.x <= right_threshold and coordinates.y >= up_threshold and coordinates.y <= down_threshold
+    return coordinates.x <= left_threshold and coordinates.x >= right_threshold
 
 
 '''
@@ -39,17 +51,24 @@ def calculate_direction(current, previous, wasHand):
     # if there wasnt a hand before
     # there is a new hand registered, so just return up (0)
     if not wasHand:
-        return[True, 0]
+        return[True, 0, 'false']
 
     # if there was a hand before
-    current_wrist = current[0]
-    previous_wrist = previous[0]
+    current_wrist = current.landmark[0]
+    print('current wrist x, y', current_wrist.x, ' ', current_wrist.y)
+    previous_wrist = previous.landmark[0]
+    print('previous wrist x, y', previous_wrist.x, ' ', previous_wrist.y)
+
 
     if past_threshold(current_wrist):
         previous = current
-        return [False, 0]
+        print('past threshold, returning 0')
+        return [False, 0, 'false']
 
-    output = [True, calculate_difference(current_wrist, previous_wrist)]
+    print('not past threshold, giving you a direction actually')
+
+    #TODO: pass in an additional bool based on the verrical difference
+    output = [True, calculate_difference(current_wrist, previous_wrist), calculate_height(current_wrist, previous_wrist)]
     previous = current
     return output
         # if absolute hand location 
@@ -91,10 +110,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
         hand_prediction = hand_tracker.predict(image)
         if hand_prediction == None:
-            await unreal_server.send_vector({'hands': 'none', 'velocity': '0', 'direction': '0'})
+            print('no hand detected')
+            await unreal_server.send_vector({'hands': 'none', 'velocity': '0', 'direction': '0', 'move_up' : 'false'})
             wasHand = False
             previous_prediction = None
             continue
+        else:
+            print('hand detected')
 
         # calculate direction here and pass in
         hand = calculate_direction(hand_prediction, previous_prediction, wasHand)

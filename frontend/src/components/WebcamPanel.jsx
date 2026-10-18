@@ -1,33 +1,16 @@
+import Webcam from './Webcam';
+import Frame from './Frame';
 
+export default function WebcamPanel() {
+    return (
+        <section className="webcam-panel">
+            <div className="webcam-frame">
+                <Webcam />
+            </div>
 
-import Webcam from './Webcam'
-import Frame from './Frame'
-
-// TODO: Standardize css passing methodology
-
-export default function WebcamPanel(){
-    const frameStyle = {
-        position: 'absolute',
-        top: '.6%',
-        right: '3.7%',
-
-    }
-    const webcamStyle = {}
-    const textStyle = {
-        position: 'absolute',
-        bottom: '115px',
-        fontSize: 15,
-        left: '210px',
-    }
-
-    return(
-        <div style={{position: 'relative', height: '400px', width: '400px', marginTop: '20px', left: '222%'}}>
-            <Frame style={frameStyle}/>
-             <Webcam />
-             <p className="text-[#FFF] font-judson text-2xl w-[100px] h-5" style={textStyle}>
+            <p className="webcam-label">
                 View Camera
             </p>
-        </div>
-        
+        </section>
     );
 }

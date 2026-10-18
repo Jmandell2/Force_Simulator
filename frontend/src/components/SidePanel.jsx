@@ -21,7 +21,14 @@ export default function SidePanel() {
                     className="side-circle"
                 />
 
-                <p className="side-link">GitHub</p>
+                <a
+                className="side-link"
+                href="https://github.com/Jmandell2/Force_Simulator"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                GitHub
+                </a>                
                 <p className="side-link">Website</p>
             </div>
         </aside>
